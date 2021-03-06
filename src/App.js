@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 
 function App() {
+  const [time,setTime] = useState(0)
   const [text,setText] = useState('Write in me!')
   const [count,setCount] = useState(text.trim().split(' ').length)
   
@@ -11,8 +12,10 @@ function App() {
 
   return (
     <div className='w-screen h-screen flex items-center justify-center align-middle'>
-      <div className='container w-1/2 h-1/2 p-6 m-auto shadow '>
-        <div id='button-row' className='flex flex-row w-full'>
+      <div className='container w-1/2 h-3/4 p-6 m-auto shadow '>
+        <div id='button-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
+          <input onChange={(e)=>setTime(e.target.value)} type='number' value={time} className='inline-flex'/> 
+          <div className='inline-flex align-middle'>minutes</div>
           <button className='inline-flex btn btn-primary mx-2'>Start</button>
           <button className='inline-flex btn btn-primary mx-2'>Stop</button>
           <button className='inline-flex btn btn-primary mx-2'>Reset</button>
