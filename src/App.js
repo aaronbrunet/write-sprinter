@@ -32,17 +32,17 @@ function App() {
       <div className='container w-1/2 h-3/4 p-6 m-auto shadow '>
       <h1 className='text-3xl justify-center text-center mb-4'>Write Like The Wind</h1>
         <div id='input-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
-          <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
+          <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex input input-bordered ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
           <div className='inline-flex align-middle'>{parseInt(time)===1 ? 'minute' : 'minutes'}</div>
         </div>
         <div id='button-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
           {(running||paused) ?
-          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>Stop</button>
+          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-error mx-2' disabled={!(running||paused)}>Stop</button>
           :
-          <button onClick={()=>{setText('');setSeconds(time*60);setRunning(true);setCompleted(false);togglePaused(false)}} className='inline-flex btn btn-primary mx-2'>Start</button>
+          <button onClick={()=>{setText('');setSeconds(time*60);setRunning(true);setCompleted(false);togglePaused(false)}} className='inline-flex btn btn-primary mx-2' disabled={time===0}>Start</button>
           }
           <button onClick={()=>{setRunning(()=>!running);togglePaused(()=>!paused)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>{paused ? 'Resume' : 'Pause'}</button>
-          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2'>Reset</button>
+          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-outline btn-accent mx-2'>Reset</button>
         </div>
         <div id='status' className='items-center align-middle justify-center'>
         <div className='flex flex-row w-full items-center align-middle justify-center'>
@@ -56,7 +56,7 @@ function App() {
         </div>
         <div id='editor-row' className='flex flex-row w-full h-full overflow-hidden'>
           {/* <div onChange={(e)=> setText(...text, e.target.value)} id='editor' contentEditable className='h-full w-full'>{text}</div> */}
-          <textarea onChange={(e)=>setText(()=>e.target.value)} placeholder={running ? 'Get started!' : 'Start the timer to begin writing!'} value={text} className={`flex flex-row h-1/2 w-full overflow-y-scroll my-4 ${!running && `bg-gray-200`}`} readOnly={!running}/>
+          <textarea onChange={(e)=>setText(()=>e.target.value)} placeholder={running ? 'Get started!' : 'Start the timer to begin writing!'} value={text} className={`flex flex-row h-1/2 w-full overflow-y-scroll my-4 shadow-sm textarea textarea-bordered  ${!running && `bg-gray-200`}`} readOnly={!running}/>
         </div>
       </div>
     </div>
