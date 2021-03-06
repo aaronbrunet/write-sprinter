@@ -1,9 +1,10 @@
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      
+    <div className='w-screen h-screen flex items-center justify-center align-middle'>
+      <div className='container w-1/2 h-1/2 p-6 m-auto shadow '>
+        Hello World!
+      </div>
     </div>
   );
 }
