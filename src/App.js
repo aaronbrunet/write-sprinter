@@ -28,7 +28,9 @@ function App() {
 
   return (
     <div className='w-screen h-screen flex items-center justify-center align-middle'>
+      
       <div className='container w-1/2 h-3/4 p-6 m-auto shadow '>
+      <h1 className='text-3xl justify-center text-center mb-4'>Write Like The Wind</h1>
         <div id='input-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
           <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
           <div className='inline-flex align-middle'>{parseInt(time)===1 ? 'minute' : 'minutes'}</div>
@@ -54,7 +56,7 @@ function App() {
         </div>
         <div id='editor-row' className='flex flex-row w-full h-full overflow-hidden'>
           {/* <div onChange={(e)=> setText(...text, e.target.value)} id='editor' contentEditable className='h-full w-full'>{text}</div> */}
-          <textarea onChange={(e)=>setText(()=>e.target.value)} placeholder={running ? 'Get started!' : 'Start the timer to begin writing!'} value={text} className={`flex flex-row h-3/4 w-full overflow-y-scroll ${!running && `bg-gray-200`}`} readOnly={!running}/>
+          <textarea onChange={(e)=>setText(()=>e.target.value)} placeholder={running ? 'Get started!' : 'Start the timer to begin writing!'} value={text} className={`flex flex-row h-1/2 w-full overflow-y-scroll my-4 ${!running && `bg-gray-200`}`} readOnly={!running}/>
         </div>
       </div>
     </div>
