@@ -29,18 +29,25 @@ function App() {
   return (
     <div className='w-screen h-screen flex items-center justify-center align-middle'>
       <div className='container w-1/2 h-3/4 p-6 m-auto shadow '>
-        <div id='button-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
-          <input onChange={(e)=>setTime(e.target.value)} type='number' value={time} className={`inline-flex ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
+        <div id='input-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
+          <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
           <div className='inline-flex align-middle'>{parseInt(time)===1 ? 'minute' : 'minutes'}</div>
+        </div>
+        <div id='button-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
           {(running||paused) ?
-          <button onClick={()=>{setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>Stop</button>
+          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>Stop</button>
           :
           <button onClick={()=>{setText('');setSeconds(time*60);setRunning(true);setCompleted(false);togglePaused(false)}} className='inline-flex btn btn-primary mx-2'>Start</button>
           }
           <button onClick={()=>{setRunning(()=>!running);togglePaused(()=>!paused)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>{paused ? 'Resume' : 'Pause'}</button>
           <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2'>Reset</button>
         </div>
-        <div className='flex flex-row w-full'>{(running||paused) && `${seconds} second`}{(running||paused) && seconds>1 && 's'}</div>
+        <div className='flex flex-row w-full'>
+          {seconds > 0 ? (
+          seconds>59 ? `${(Math.floor(seconds/60)<10) ? `0`:``}${Math.floor(seconds /60)}:${(seconds%60<10) ? `0`:``}${seconds % 60}`: `00:${seconds}`
+        ): '00:00'
+        }
+        </div>
         <div className='flex flex-row w-full'>{running && 'Running!'}{paused && 'Paused!'}{completed && 'Completed!'}</div>
         <div className='flex flex-row w-full items-center justify-center'>{(running||paused||completed) && `Wordcount: ${count}`}</div>
         <div id='editor-row' className='flex flex-row w-full h-full overflow-hidden'>
