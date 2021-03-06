@@ -42,17 +42,19 @@ function App() {
           <button onClick={()=>{setRunning(()=>!running);togglePaused(()=>!paused)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>{paused ? 'Resume' : 'Pause'}</button>
           <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2'>Reset</button>
         </div>
-        <div className='flex flex-row w-full'>
-          {seconds > 0 ? (
+        <div id='status' className='items-center align-middle justify-center'>
+        <div className='flex flex-row w-full items-center align-middle justify-center'>
+          {((running||paused) && seconds > 0) ? (
           seconds>59 ? `${(Math.floor(seconds/60)<10) ? `0`:``}${Math.floor(seconds /60)}:${(seconds%60<10) ? `0`:``}${seconds % 60}`: `00:${seconds}`
         ): '00:00'
         }
         </div>
-        <div className='flex flex-row w-full'>{running && 'Running!'}{paused && 'Paused!'}{completed && 'Completed!'}</div>
-        <div className='flex flex-row w-full items-center justify-center'>{(running||paused||completed) && `Wordcount: ${count}`}</div>
+        <div className='flex flex-row w-full items-center align-middle justify-center'>{running && 'Running!'}{paused && 'Paused!'}{completed && 'Completed!'}</div>
+        <div className='flex flex-row w-full items-center align-middle justify-center'>{(running||paused||completed) && `Wordcount: ${count}`}</div>
+        </div>
         <div id='editor-row' className='flex flex-row w-full h-full overflow-hidden'>
           {/* <div onChange={(e)=> setText(...text, e.target.value)} id='editor' contentEditable className='h-full w-full'>{text}</div> */}
-          <textarea onChange={(e)=>setText(()=>e.target.value)} placeholder={running ? 'Get started!' : 'Start the timer to begin writing!'} value={text} className={`flex flex-row h-full w-full ${!running && `bg-gray-200`}`} readOnly={!running}/>
+          <textarea onChange={(e)=>setText(()=>e.target.value)} placeholder={running ? 'Get started!' : 'Start the timer to begin writing!'} value={text} className={`flex flex-row h-3/4 w-full overflow-y-scroll ${!running && `bg-gray-200`}`} readOnly={!running}/>
         </div>
       </div>
     </div>
