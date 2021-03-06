@@ -32,8 +32,11 @@ function App() {
         <div id='button-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
           <input onChange={(e)=>setTime(e.target.value)} type='number' value={time} className={`inline-flex ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
           <div className='inline-flex align-middle'>{parseInt(time)===1 ? 'minute' : 'minutes'}</div>
-          <button onClick={()=>{setText('');setSeconds(time*60);setRunning(true);setCompleted(false)}} className='inline-flex btn btn-primary mx-2'>Start</button>
-          <button onClick={()=>{setSeconds(0);setRunning(false);setCompleted(null)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>Stop</button>
+          {(running||paused) ?
+          <button onClick={()=>{setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>Stop</button>
+          :
+          <button onClick={()=>{setText('');setSeconds(time*60);setRunning(true);setCompleted(false);togglePaused(false)}} className='inline-flex btn btn-primary mx-2'>Start</button>
+          }
           <button onClick={()=>{setRunning(()=>!running);togglePaused(()=>!paused)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>{paused ? 'Resume' : 'Pause'}</button>
           <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-primary mx-2'>Reset</button>
         </div>
