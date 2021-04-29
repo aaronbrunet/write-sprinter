@@ -9,13 +9,13 @@ function App() {
   const [running,setRunning] = useState(false)
   const [paused,togglePaused] = useState(false)
   const [completed,setCompleted] = useState(null)
-  const [copyLabel,setCopyLabel] = useState('Copy')
+  const [copyLabel,setCopyLabel] = useState('💾 Copy')
   
   
   const copyText = () => {
     navigator.clipboard.writeText(text)
-    setCopyLabel('Copied!')
-    setTimeout(()=>{setCopyLabel('Copy')},5000)
+    setCopyLabel('✅ Copied!')
+    setTimeout(()=>{setCopyLabel('💾 Copy')},5000)
   }
   
   useEffect(()=>{
@@ -40,7 +40,7 @@ function App() {
       <div className='container w-1/2 h-3/4 p-6 m-auto shadow '>
       <h1 className='text-3xl justify-center text-center mb-4'>Write Like The Wind</h1>
         <div id='input-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
-          <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex input input-bordered ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
+          <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex input input-bordered w-12 pr-1 mx-2 ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
           <div className='inline-flex align-middle'>{parseInt(time)===1 ? 'minute' : 'minutes'}</div>
         </div>
         <div id='button-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
@@ -50,7 +50,7 @@ function App() {
           <button onClick={()=>{setText('');setSeconds(time*60);setRunning(true);setCompleted(false);togglePaused(false)}} className='inline-flex btn btn-primary mx-2' disabled={time===0}>Start</button>
           }
           <button onClick={()=>{setRunning(()=>!running);togglePaused(()=>!paused)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>{paused ? 'Resume' : 'Pause'}</button>
-          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false);setCount(0);setText('');}} className='inline-flex btn btn-outline btn-accent mx-2'>Reset</button>
+          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);copyText();togglePaused(false);setCount(0);setText('');}} className='inline-flex btn btn-outline btn-accent mx-2'>Reset</button>
         </div>
         <div id='status' className='items-center align-middle justify-center'>
         <div className='flex flex-row w-full items-center align-middle justify-center'>
@@ -59,10 +59,10 @@ function App() {
         ): '00:00'
         }
         </div>
-        <div className='flex flex-row w-full items-center align-middle justify-center'>{running && 'Running!'}{paused && 'Paused!'}{completed && 'Completed!'}</div>
+        {/* <div className='flex flex-row w-full items-center align-middle justify-center'>{running && 'Running!'}{paused && 'Paused!'}{completed && 'Completed!'}</div> */}
         <div className='flex flex-row w-full items-center align-middle justify-center'>
-          <div className='inline-flex'>{`Wordcount: ${count}`}</div>
-          <button onClick={() => copyText()} className='inline-flex btn btn-error mx-2'>{copyLabel}</button>
+          <div className='inline-flex'>{`${count} words`}</div>
+          <button onClick={() => copyText()} className='inline-flex btn btn-ghost mx-1 px-1 py-1' disabled={text.length <= 0}>{copyLabel}</button>
         </div>
         </div>
         <div id='editor-row' className='flex flex-row w-full h-full overflow-hidden'>
