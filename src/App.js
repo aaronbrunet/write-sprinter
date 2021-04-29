@@ -9,6 +9,14 @@ function App() {
   const [running,setRunning] = useState(false)
   const [paused,togglePaused] = useState(false)
   const [completed,setCompleted] = useState(null)
+  const [copyLabel,setCopyLabel] = useState('Copy')
+  
+  
+  const copyText = () => {
+    navigator.clipboard.writeText(text)
+    setCopyLabel('Copied!')
+    setTimeout(()=>{setCopyLabel('Copy')},5000)
+  }
   
   useEffect(()=>{
     text === '' ? setCount(0) : setCount(()=>text.trim().split(' ').length)
@@ -42,7 +50,7 @@ function App() {
           <button onClick={()=>{setText('');setSeconds(time*60);setRunning(true);setCompleted(false);togglePaused(false)}} className='inline-flex btn btn-primary mx-2' disabled={time===0}>Start</button>
           }
           <button onClick={()=>{setRunning(()=>!running);togglePaused(()=>!paused)}} className='inline-flex btn btn-primary mx-2' disabled={!(running||paused)}>{paused ? 'Resume' : 'Pause'}</button>
-          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-outline btn-accent mx-2'>Reset</button>
+          <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false);setCount(0);setText('');}} className='inline-flex btn btn-outline btn-accent mx-2'>Reset</button>
         </div>
         <div id='status' className='items-center align-middle justify-center'>
         <div className='flex flex-row w-full items-center align-middle justify-center'>
@@ -52,7 +60,10 @@ function App() {
         }
         </div>
         <div className='flex flex-row w-full items-center align-middle justify-center'>{running && 'Running!'}{paused && 'Paused!'}{completed && 'Completed!'}</div>
-        <div className='flex flex-row w-full items-center align-middle justify-center'>{(running||paused||completed) && `Wordcount: ${count}`}</div>
+        <div className='flex flex-row w-full items-center align-middle justify-center'>
+          <div className='inline-flex'>{`Wordcount: ${count}`}</div>
+          <button onClick={() => copyText()} className='inline-flex btn btn-error mx-2'>{copyLabel}</button>
+        </div>
         </div>
         <div id='editor-row' className='flex flex-row w-full h-full overflow-hidden'>
           {/* <div onChange={(e)=> setText(...text, e.target.value)} id='editor' contentEditable className='h-full w-full'>{text}</div> */}
