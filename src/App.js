@@ -39,10 +39,19 @@ function App() {
       
       <div className='container w-1/2 h-3/4 p-6 m-auto shadow '>
       <h1 className='text-3xl justify-center text-center mb-4'>Write Like The Wind</h1>
-        <div id='input-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
+        {!(running||paused) ?
+        <div id='input-row' className='flex flex-row w-full align-middle justify-center items-center mb-6 h-12'>
           <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex input input-bordered w-12 pr-1 mx-2 ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
           <div className='inline-flex align-middle'>{parseInt(time)===1 ? 'minute' : 'minutes'}</div>
         </div>
+        :
+        <div className='flex flex-row w-full align-middle justify-center items-center mb-6 h-12'>
+          {((running||paused) && seconds > 0) ? (
+          seconds>59 ? `${(Math.floor(seconds/60)<10) ? `0`:``}${Math.floor(seconds /60)}:${(seconds%60<10) ? `0`:``}${seconds % 60}`: `00:${seconds}`
+        ): '00:00'
+        }
+        </div>
+        }
         <div id='button-row' className='flex flex-row w-full align-middle justify-center items-center mb-6'>
           {(running||paused) ?
           <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);togglePaused(false)}} className='inline-flex btn btn-error mx-2' disabled={!(running||paused)}>Stop</button>
@@ -53,12 +62,7 @@ function App() {
           <button onClick={()=>{setTime(0);setSeconds(0);setRunning(false);setCompleted(null);copyText();togglePaused(false);setCount(0);setText('');}} className='inline-flex btn btn-outline btn-accent mx-2'>Reset</button>
         </div>
         <div id='status' className='items-center align-middle justify-center'>
-        <div className='flex flex-row w-full items-center align-middle justify-center'>
-          {((running||paused) && seconds > 0) ? (
-          seconds>59 ? `${(Math.floor(seconds/60)<10) ? `0`:``}${Math.floor(seconds /60)}:${(seconds%60<10) ? `0`:``}${seconds % 60}`: `00:${seconds}`
-        ): '00:00'
-        }
-        </div>
+        
         {/* <div className='flex flex-row w-full items-center align-middle justify-center'>{running && 'Running!'}{paused && 'Paused!'}{completed && 'Completed!'}</div> */}
         <div className='flex flex-row w-full items-center align-middle justify-center'>
           <div className='inline-flex'>{`${count} words`}</div>
