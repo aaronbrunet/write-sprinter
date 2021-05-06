@@ -38,7 +38,7 @@ function App() {
     <div className='w-screen h-screen flex items-center justify-center align-middle'>
       
       <div className='container w-1/2 h-3/4 p-6 m-auto shadow '>
-      <h1 className='text-3xl justify-center text-center mb-4'>Write Like The Wind</h1>
+      <h1 className='text-3xl justify-center text-center mb-4'>Write Like The Wind</h1> 
         {!(running||paused) ?
         <div id='input-row' className='flex flex-row w-full align-middle justify-center items-center mb-6 h-12'>
           <input onChange={(e)=>setTime(e.target.value)} type='number' max={60} value={time} className={`inline-flex input input-bordered w-12 pr-1 mx-2 ${(running||paused) && `bg-gray-200`}`} readOnly={(running||paused)}/> 
