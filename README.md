@@ -1,1 +1,1 @@
-aaronbrunet.dev/write-sprinter/
+https://aaronbrunet.dev/write-sprinter/
